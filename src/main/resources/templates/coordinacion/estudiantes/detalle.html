@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/_layout :: content(titulo='Detalle del Estudiante', content=~{::content})}">
+
+<th:block th:fragment="content">
+    <div class="container-fluid">
+        <h1 class="h3 mb-4 text-gray-800">Detalle del Estudiante</h1>
+
+        <!-- Información del Estudiante -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                <h6 class="m-0 font-weight-bold text-primary" th:text="${estudiante.getNombreCompleto()}"></h6>
+                <a th:href="@{/coordinacion/estudiantes}" class="btn btn-secondary btn-sm">Volver a la lista</a>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>Documento:</strong> <span th:text="${estudiante.numeroDocumento}"></span></p>
+                        <p><strong>Correo:</strong> <span th:text="${estudiante.correoElectronico}"></span></p>
+                        <p><strong>Teléfono:</strong> <span th:text="${estudiante.numeroTelefonico}"></span></p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>Tipo Programa:</strong> <span th:text="${estudiante.tipoPrograma.nombre}"></span></p>
+                        <p><strong>Programa:</strong> <span th:text="${estudiante.programa}"></span></p>
+                        <p><strong>Registro SNP:</strong> <span th:text="${estudiante.numeroRegistro}"></span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resultado Saber Pro -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                <h6 class="m-0 font-weight-bold text-primary">Resultado Saber Pro</h6>
+                <div th:if="${resultado == null}">
+                    <a th:href="@{/coordinacion/resultados/nuevo/{estudianteId}(estudianteId=${estudiante.id})}" class="btn btn-success btn-sm">
+                        <i class="fas fa-plus"></i> Registrar Resultado
+                    </a>
+                </div>
+                <div th:if="${resultado != null}">
+                    <a th:href="@{/coordinacion/resultados/editar/{id}(id=${resultado.id})}" class="btn btn-warning btn-sm">
+                        <i class="fas fa-edit"></i> Editar Resultado
+                    </a>
+                </div>
+            </div>
+            <div class="card-body">
+                <div th:if="${resultado == null}" class="text-center p-4">
+                    <p>Este estudiante aún no tiene un resultado registrado.</p>
+                </div>
+                <div th:if="${resultado != null}">
+                    <div class="row text-center mb-4">
+                        <div class="col-md-4">
+                            <div class="card bg-light p-3">
+                                <h5>Puntaje Global</h5>
+                                <p class="h2 font-weight-bold" th:text="${resultado.puntaje}"></p>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card bg-light p-3">
+                                <h5>Nivel y Beneficio</h5>
+                                <p class="h4"><span th:text="${resultado.nivelBeneficio.descripcion}" th:classappend="'badge bg-' + ${resultado.nivelBeneficio.bootstrapClass}"></span></p>
+                                <p class="mb-0" th:text="${resultado.descripcionBeneficio}"></p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h5 class="mt-4">Detalle de Competencias</h5>
+                    <table class="table table-sm table-bordered">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Competencia</th>
+                                <th>Puntaje</th>
+                                <th>Nivel</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Comunicación Escrita</td><td th:text="${resultado.comunicacionEscrita}"></td><td th:text="${resultado.comunicacionEscritaNivel}"></td></tr>
+                            <tr><td>Razonamiento Cuantitativo</td><td th:text="${resultado.razonamientoCuantitativo}"></td><td th:text="${resultado.razonamientoCuantitativoNivel}"></td></tr>
+                            <tr><td>Lectura Crítica</td><td th:text="${resultado.lecturaCritica}"></td><td th:text="${resultado.lecturaCriticaNivel}"></td></tr>
+                            <tr><td>Competencias Ciudadanas</td><td th:text="${resultado.competenciasCiudadanas}"></td><td th:text="${resultado.competenciasCiudadanasNivel}"></td></tr>
+                            <tr><td>Inglés</td><td th:text="${resultado.ingles}"></td><td th:text="${resultado.inglesNivel}"></td></tr>
+                            <tr><td>Formulación de Proyectos</td><td th:text="${resultado.formulacionProyectos}"></td><td th:text="${resultado.formulacionProyectosNivel}"></td></tr>
+                            <tr><td>Pensamiento Científico</td><td th:text="${resultado.pensamientoCientifico}"></td><td th:text="${resultado.pensamientoCientificoNivel}"></td></tr>
+                            <tr><td>Diseño de Software</td><td th:text="${resultado.disenoSoftware}"></td><td th:text="${resultado.disenoSoftwareNivel}"></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+</html>

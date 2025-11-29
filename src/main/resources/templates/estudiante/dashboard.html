@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/_layout :: content(titulo='Mi Panel', content=~{::content})}">
+
+<th:block th:fragment="content">
+    <div class="container-fluid">
+        <h1 class="h3 mb-4 text-gray-800">Mi Panel de Estudiante</h1>
+
+        <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+        <div th:if="${estudiante == null}" class="alert alert-warning">
+            Tu usuario no está asociado a ningún perfil de estudiante. Por favor, contacta a coordinación.
+        </div>
+
+        <div th:if="${estudiante != null}">
+            <div class="card shadow mb-4">
+                <div class="card-header">
+                    <h6 class="m-0 font-weight-bold text-primary">Bienvenido/a, <span th:text="${estudiante.primerNombre}"></span></h6>
+                </div>
+                <div class="card-body">
+                    <p>Aquí puedes consultar tu resultado de las pruebas Saber Pro y los beneficios que has obtenido.</p>
+                    <div th:if="${resultado == null}" class="alert alert-info">
+                        Aún no se ha registrado tu resultado. Vuelve a consultar más tarde.
+                    </div>
+                </div>
+            </div>
+
+            <div th:if="${resultado != null}" class="row">
+                <div class="col-lg-6">
+                    <div class="card shadow mb-4">
+                        <div class="card-header"><h6 class="m-0 font-weight-bold text-primary">Resumen de tu Resultado</h6></div>
+                        <div class="card-body text-center">
+                            <h5>Puntaje Global</h5>
+                            <p class="display-4 font-weight-bold" th:text="${resultado.puntaje}"></p>
+                            <hr>
+                            <a th:href="@{/estudiante/mi-resultado}" class="btn btn-primary">Ver Detalle Completo</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card shadow mb-4">
+                        <div class="card-header"><h6 class="m-0 font-weight-bold text-primary">Tus Beneficios</h6></div>
+                        <div class="card-body text-center">
+                            <h5>Nivel Alcanzado</h5>
+                            <p class="h4"><span th:text="${resultado.nivelBeneficio.descripcion}" th:classappend="'badge bg-' + ${resultado.nivelBeneficio.bootstrapClass}"></span></p>
+                            <p th:text="${resultado.descripcionBeneficio}"></p>
+                            <hr>
+                            <a th:href="@{/estudiante/mis-beneficios}" class="btn btn-success">Consultar Beneficios</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+</html>

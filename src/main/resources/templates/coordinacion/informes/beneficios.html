@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/_layout :: content(titulo='Informe de Beneficios', content=~{::content})}">
+
+<th:block th:fragment="content">
+    <div class="container-fluid">
+        <h1 class="h3 mb-4 text-gray-800">Informe de Estudiantes con Beneficios</h1>
+
+        <div class="card shadow mb-4">
+            <div class="card-header">
+                <h6 class="m-0 font-weight-bold text-primary">Estudiantes con nivel Bueno, Sobresaliente o Excelente</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover" width="100%" cellspacing="0">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Estudiante</th>
+                                <th>Puntaje</th>
+                                <th>Nivel</th>
+                                <th>Descripción del Beneficio</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="res : ${resultados}">
+                                <td th:text="${res.estudiante.getNombreCompleto()}"></td>
+                                <td th:text="${res.puntaje}"></td>
+                                <td>
+                                    <span th:text="${res.nivelBeneficio.descripcion}" 
+                                          th:classappend="'badge bg-' + ${res.nivelBeneficio.bootstrapClass}"></span>
+                                </td>
+                                <td th:text="${res.descripcionBeneficio}"></td>
+                            </tr>
+                            <tr th:if="${#lists.isEmpty(resultados)}">
+                                <td colspan="4" class="text-center">No hay estudiantes con beneficios.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+</html>

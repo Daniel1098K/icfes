@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/_layout :: content(titulo='Mis Beneficios', content=~{::content})}">
+
+<th:block th:fragment="content">
+    <div class="container-fluid">
+        <h1 class="h3 mb-4 text-gray-800">Mis Beneficios Obtenidos</h1>
+
+        <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+        <div th:if="${resultado == null}" class="alert alert-info">
+            No tienes un resultado registrado, por lo tanto, no hay beneficios para mostrar.
+        </div>
+
+        <div th:if="${resultado != null}" class="card shadow mb-4">
+            <div class="card-body">
+                <div class="text-center">
+                    <h5 class="card-title">Nivel Alcanzado: 
+                        <span th:text="${resultado.nivelBeneficio.descripcion}" 
+                              th:classappend="'badge bg-' + ${resultado.nivelBeneficio.bootstrapClass}"></span>
+                    </h5>
+                    <p class="card-text fs-5 mt-3" th:text="${resultado.descripcionBeneficio}"></p>
+                    <hr>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-md-4">
+                        <h6>¿Puedo Graduarme?</h6>
+                        <p th:if="${resultado.puedeGraduar}" class="text-success fw-bold">
+                            <i class="fas fa-check-circle"></i> Sí, cumples con el requisito de las pruebas Saber Pro.
+                        </p>
+                        <p th:unless="${resultado.puedeGraduar}" class="text-danger fw-bold">
+                            <i class="fas fa-times-circle"></i> No, tu puntaje está por debajo del mínimo requerido para graduarte.
+                        </p>
+                    </div>
+                    <div class="col-md-4">
+                        <h6>Nota de Exoneración</h6>
+                        <p th:if="${resultado.notaExoneracion != null}" class="fw-bold fs-4 text-primary" th:text="${resultado.notaExoneracion}"></p>
+                        <p th:unless="${resultado.notaExoneracion != null}">No aplica para tu puntaje.</p>
+                    </div>
+                    <div class="col-md-4">
+                        <h6>Beca Derechos de Grado</h6>
+                        <p th:if="${resultado.porcentajeBeca > 0}" class="fw-bold fs-4 text-success" th:text="${resultado.porcentajeBeca + '%'}"></p>
+                        <p th:unless="${resultado.porcentajeBeca > 0}">No aplica para tu puntaje.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/_layout :: content(titulo='Mi Resultado', content=~{::content})}">
+
+<th:block th:fragment="content">
+    <div class="container-fluid">
+        <h1 class="h3 mb-4 text-gray-800">Detalle de Mi Resultado</h1>
+
+        <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+        
+        <div th:if="${resultado == null}" class="alert alert-info">
+            Aún no tienes un resultado registrado.
+        </div>
+
+        <div th:if="${resultado != null}" class="card shadow mb-4">
+            <div class="card-header">
+                <h6 class="m-0 font-weight-bold text-primary">Resultado Saber Pro</h6>
+            </div>
+            <div class="card-body">
+                <div class="row text-center mb-4">
+                    <div class="col-md-4">
+                        <div class="card bg-light p-3">
+                            <h5>Puntaje Global</h5>
+                            <p class="h2 font-weight-bold" th:text="${resultado.puntaje}"></p>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card bg-light p-3">
+                            <h5>Nivel Alcanzado</h5>
+                            <p class="h4"><span th:text="${resultado.nivelBeneficio.descripcion}" th:classappend="'badge bg-' + ${resultado.nivelBeneficio.bootstrapClass}"></span></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <h5 class="mt-4">Detalle de Competencias</h5>
+                <div class="table-responsive">
+                    <table class="table table-sm table-bordered">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Competencia</th>
+                                <th>Puntaje</th>
+                                <th>Nivel</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Comunicación Escrita</td><td th:text="${resultado.comunicacionEscrita ?: 'N/A'}"></td><td th:text="${resultado.comunicacionEscritaNivel ?: 'N/A'}"></td></tr>
+                            <tr><td>Razonamiento Cuantitativo</td><td th:text="${resultado.razonamientoCuantitativo ?: 'N/A'}"></td><td th:text="${resultado.razonamientoCuantitativoNivel ?: 'N/A'}"></td></tr>
+                            <tr><td>Lectura Crítica</td><td th:text="${resultado.lecturaCritica ?: 'N/A'}"></td><td th:text="${resultado.lecturaCriticaNivel ?: 'N/A'}"></td></tr>
+                            <tr><td>Competencias Ciudadanas</td><td th:text="${resultado.competenciasCiudadanas ?: 'N/A'}"></td><td th:text="${resultado.competenciasCiudadanasNivel ?: 'N/A'}"></td></tr>
+                            <tr><td>Inglés</td><td th:text="${resultado.ingles ?: 'N/A'}"></td><td th:text="${resultado.inglesNivel ?: 'N/A'}"></td></tr>
+                            <tr><td>Formulación de Proyectos</td><td th:text="${resultado.formulacionProyectos ?: 'N/A'}"></td><td th:text="${resultado.formulacionProyectosNivel ?: 'N/A'}"></td></tr>
+                            <tr><td>Pensamiento Científico</td><td th:text="${resultado.pensamientoCientifico ?: 'N/A'}"></td><td th:text="${resultado.pensamientoCientificoNivel ?: 'N/A'}"></td></tr>
+                            <tr><td>Diseño de Software</td><td th:text="${resultado.disenoSoftware ?: 'N/A'}"></td><td th:text="${resultado.disenoSoftwareNivel ?: 'N/A'}"></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+</html>

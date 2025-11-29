@@ -1,0 +1,54 @@
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+
+h1, h2, h3 {
+    color: #0053A0; /* Azul ICFES */
+}
+
+a {
+    color: #0053A0; /* Azul ICFES */
+}
+
+.btn-primary {
+    background-color: #0053A0; /* Azul ICFES */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.btn-secondary {
+    background-color: #FDB913; /* Amarillo ICFES */
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+th {
+    background-color: #f2f2f2;
+    color: #6C6C6C; /* Gris ICFES */
+}

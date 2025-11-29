@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/_layout :: content(titulo='Gestión de Resultados', content=~{::content})}">
+
+<th:block th:fragment="content">
+    <div class="container-fluid">
+        <h1 class="h3 mb-4 text-gray-800">Gestión de Resultados Saber Pro</h1>
+
+        <div class="card shadow mb-4">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover" width="100%" cellspacing="0">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Estudiante</th>
+                                <th>Puntaje</th>
+                                <th>Nivel Beneficio</th>
+                                <th>Puede Graduar</th>
+                                <th>Fecha Registro</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="res : ${resultados}">
+                                <td th:text="${res.estudiante.getNombreCompleto()}"></td>
+                                <td th:text="${res.puntaje}"></td>
+                                <td>
+                                    <span th:text="${res.nivelBeneficio.descripcion}" 
+                                          th:classappend="'badge bg-' + ${res.nivelBeneficio.bootstrapClass}"></span>
+                                </td>
+                                <td>
+                                    <span th:text="${res.puedeGraduar ? 'Sí' : 'No'}" 
+                                          th:classappend="${res.puedeGraduar ? 'text-success' : 'text-danger'}"></span>
+                                </td>
+                                <td th:text="${#temporals.format(res.fechaRegistroResultado, 'dd/MM/yyyy')}"></td>
+                                <td>
+                                    <a th:href="@{/coordinacion/estudiantes/detalle/{id}(id=${res.estudiante.id})}" class="btn btn-sm btn-info" title="Ver Detalle"><i class="fas fa-eye"></i></a>
+                                    <a th:href="@{/coordinacion/resultados/editar/{id}(id=${res.id})}" class="btn btn-sm btn-warning" title="Editar"><i class="fas fa-edit"></i></a>
+                                </td>
+                            </tr>
+                            <tr th:if="${#lists.isEmpty(resultados)}">
+                                <td colspan="6" class="text-center">No hay resultados registrados.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+</html>

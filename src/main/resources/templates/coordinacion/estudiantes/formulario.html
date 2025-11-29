@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/_layout :: content(titulo=${estudiante.id == null ? 'Nuevo Estudiante' : 'Editar Estudiante'}, content=~{::content})}">
+
+<th:block th:fragment="content">
+    <div class="container-fluid">
+        <h1 class="h3 mb-4 text-gray-800" th:text="${estudiante.id == null ? 'Nuevo Estudiante' : 'Editar Estudiante'}"></h1>
+
+        <div class="card shadow mb-4">
+            <div class="card-body">
+                <form th:object="${estudiante}" th:action="${estudiante.id == null} ? @{/coordinacion/estudiantes/guardar} : @{/coordinacion/estudiantes/actualizar/{id}(id=${estudiante.id})}" method="post">
+                    
+                    <input type="hidden" th:field="*{id}" />
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="primerNombre" class="form-label">Primer Nombre</label>
+                            <input type="text" class="form-control" id="primerNombre" th:field="*{primerNombre}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="segundoNombre" class="form-label">Segundo Nombre</label>
+                            <input type="text" class="form-control" id="segundoNombre" th:field="*{segundoNombre}">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="primerApellido" class="form-label">Primer Apellido <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="primerApellido" th:field="*{primerApellido}" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="segundoApellido" class="form-label">Segundo Apellido</label>
+                            <input type="text" class="form-control" id="segundoApellido" th:field="*{segundoApellido}">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="numeroDocumento" class="form-label">Número de Documento <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="numeroDocumento" th:field="*{numeroDocumento}" required th:readonly="${estudiante.id != null}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="correoElectronico" class="form-label">Correo Electrónico</label>
+                            <input type="email" class="form-control" id="correoElectronico" th:field="*{correoElectronico}">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="numeroTelefonico" class="form-label">Teléfono</label>
+                            <input type="text" class="form-control" id="numeroTelefonico" th:field="*{numeroTelefonico}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="numeroRegistro" class="form-label">Número de Registro (SNP)</label>
+                            <input type="text" class="form-control" id="numeroRegistro" th:field="*{numeroRegistro}">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="tipoPrograma" class="form-label">Tipo de Programa <span class="text-danger">*</span></label>
+                            <select class="form-select" id="tipoPrograma" th:field="*{tipoPrograma}" required>
+                                <option value="">Seleccione...</option>
+                                <option th:each="tipo : ${tiposPrograma}" th:value="${tipo}" th:text="${tipo.nombre}"></option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="programa" class="form-label">Nombre del Programa</label>
+                            <input type="text" class="form-control" id="programa" th:field="*{programa}">
+                        </div>
+                    </div>
+
+                    <hr>
+                    <div class="d-flex justify-content-end">
+                        <a th:href="@{/coordinacion/estudiantes}" class="btn btn-secondary me-2">Cancelar</a>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</th:block>
+</html>

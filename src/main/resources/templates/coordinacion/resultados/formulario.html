@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/_layout :: content(titulo=${resultado.id == null ? 'Nuevo Resultado' : 'Editar Resultado'}, content=~{::content})}">
+
+<th:block th:fragment="content">
+    <div class="container-fluid">
+        <h1 class="h3 mb-4 text-gray-800" th:text="${resultado.id == null ? 'Registrar Resultado' : 'Editar Resultado'}"></h1>
+
+        <div class="card shadow mb-4">
+            <div class="card-header">
+                Estudiante: <strong th:text="${estudiante.getNombreCompleto()}"></strong>
+            </div>
+            <div class="card-body">
+                <form th:object="${resultado}" th:action="${resultado.id == null} ? @{/coordinacion/resultados/guardar/{estudianteId}(estudianteId=${estudiante.id})} : @{/coordinacion/resultados/actualizar/{id}(id=${resultado.id})}" method="post">
+                    
+                    <input type="hidden" th:field="*{id}" />
+
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label for="puntaje" class="form-label">Puntaje Global <span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" id="puntaje" th:field="*{puntaje}" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="fechaPresentacion" class="form-label">Fecha de Presentación</label>
+                            <input type="date" class="form-control" id="fechaPresentacion" th:field="*{fechaPresentacion}">
+                        </div>
+                    </div>
+
+                    <hr>
+                    <h5 class="mb-3">Competencias Genéricas</h5>
+                    <div class="row">
+                        <div class="col-md-4"><label>Comunicación Escrita</label><div class="input-group"><input type="number" th:field="*{comunicacionEscrita}" class="form-control"><input type="number" th:field="*{comunicacionEscritaNivel}" class="form-control" placeholder="Nivel"></div></div>
+                        <div class="col-md-4"><label>Razonamiento Cuantitativo</label><div class="input-group"><input type="number" th:field="*{razonamientoCuantitativo}" class="form-control"><input type="number" th:field="*{razonamientoCuantitativoNivel}" class="form-control" placeholder="Nivel"></div></div>
+                        <div class="col-md-4"><label>Lectura Crítica</label><div class="input-group"><input type="number" th:field="*{lecturaCritica}" class="form-control"><input type="number" th:field="*{lecturaCriticaNivel}" class="form-control" placeholder="Nivel"></div></div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-4"><label>Competencias Ciudadanas</label><div class="input-group"><input type="number" th:field="*{competenciasCiudadanas}" class="form-control"><input type="number" th:field="*{competenciasCiudadanasNivel}" class="form-control" placeholder="Nivel"></div></div>
+                        <div class="col-md-4"><label>Inglés</label><div class="input-group"><input type="number" th:field="*{ingles}" class="form-control"><input type="number" th:field="*{inglesNivel}" class="form-control" placeholder="Nivel"></div></div>
+                    </div>
+
+                    <hr>
+                    <h5 class="mb-3">Competencias Específicas</h5>
+                     <div class="row">
+                        <div class="col-md-4"><label>Formulación de Proyectos</label><div class="input-group"><input type="number" th:field="*{formulacionProyectos}" class="form-control"><input type="number" th:field="*{formulacionProyectosNivel}" class="form-control" placeholder="Nivel"></div></div>
+                        <div class="col-md-4"><label>Pensamiento Científico</label><div class="input-group"><input type="number" th:field="*{pensamientoCientifico}" class="form-control"><input type="number" th:field="*{pensamientoCientificoNivel}" class="form-control" placeholder="Nivel"></div></div>
+                        <div class="col-md-4"><label>Diseño de Software</label><div class="input-group"><input type="number" th:field="*{disenoSoftware}" class="form-control"><input type="number" th:field="*{disenoSoftwareNivel}" class="form-control" placeholder="Nivel"></div></div>
+                    </div>
+
+                    <hr>
+                    <div class="d-flex justify-content-end">
+                        <a th:href="@{/coordinacion/estudiantes/detalle/{id}(id=${estudiante.id})}" class="btn btn-secondary me-2">Cancelar</a>
+                        <button type="submit" class="btn btn-primary">Guardar Resultado</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</th:block>
+</html>

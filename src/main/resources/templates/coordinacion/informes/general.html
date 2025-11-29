@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/_layout :: content(titulo='Informe General', content=~{::content})}">
+
+<th:block th:fragment="content">
+    <div class="container-fluid">
+        <h1 class="h3 mb-4 text-gray-800">Informe General de Resultados</h1>
+
+        <!-- Tarjetas de Estadísticas -->
+        <div class="row" th:if="${estadisticas}">
+             <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total Resultados</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${estadisticas.total}">0</div>
+                            </div>
+                            <div class="col-auto"><i class="fas fa-poll fa-2x text-gray-300"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-success shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Promedio General</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${estadisticas.promedioGeneral}">0</div>
+                            </div>
+                            <div class="col-auto"><i class="fas fa-star fa-2x text-gray-300"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-danger shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">No Aprobados</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${estadisticas.noAprobados}">0</div>
+                            </div>
+                            <div class="col-auto"><i class="fas fa-times-circle fa-2x text-gray-300"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-warning shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Con Beneficios</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${estadisticas.buenos + estadisticas.sobresalientes + estadisticas.excelentes}">0</div>
+                            </div>
+                            <div class="col-auto"><i class="fas fa-gift fa-2x text-gray-300"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabla de Todos los Resultados -->
+        <div class="card shadow mb-4">
+            <div class="card-header"><h6 class="m-0 font-weight-bold text-primary">Detalle de Todos los Resultados</h6></div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Estudiante</th>
+                                <th>Puntaje</th>
+                                <th>Nivel</th>
+                                <th>Puede Graduar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="res : ${resultados}">
+                                <td th:text="${res.estudiante.getNombreCompleto()}"></td>
+                                <td th:text="${res.puntaje}"></td>
+                                <td><span th:text="${res.nivelBeneficio.descripcion}" th:classappend="'badge bg-' + ${res.nivelBeneficio.bootstrapClass}"></span></td>
+                                <td><span th:text="${res.puedeGraduar ? 'Sí' : 'No'}" th:classappend="${res.puedeGraduar ? 'text-success' : 'text-danger'}"></span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+</html>
